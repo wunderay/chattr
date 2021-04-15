@@ -1,5 +1,5 @@
 module.exports = {
     index: (req, res) => {
-        res.render("signup");
+        res.render("index");
     }
  }

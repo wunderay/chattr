@@ -1,11 +1,11 @@
 <div class="form-data">
-    <form action="/users/create" method="POST" class="center">
+    <form action="signup" method="POST" onsubmit="return validateForm()">
         <div class="form-group row">
             <div class="col-sm-3">
                 <label for="txtFName" class="col-form-label">First Name:</label>
             </div>
             <div class="col-sm-9">
-                <input type="text" id="txtFName" name="txtFName" required class="form-control"
+                <input type="text" id="txtFName" name="firstName" required class="form-control"
                     placeholder="First Name" />
             </div>
         </div>
@@ -14,28 +14,28 @@
                 <label for="txtLName" class="col-form-label">Last Name:</label>
             </div>
             <div class="col-sm-9">
-                <input type="text" id="txtLName" name="txtLName" required class="form-control"
+                <input type="text" id="txtLName" name="lastName" required class="form-control"
                     placeholder="Last Name" />
             </div>
         </div>
         <div class="row form-group">
-            <label for="txtSUsername" class="col-sm-3 col-form-label">Username:</label>
+            <label for="txtUsername" class="col-sm-3 col-form-label">Username:</label>
             <div class="col-sm-9">
-                <input type="text" id="txtSUsername" name="txtSUsername" required class="form-control" 
+                <input type="text" id="txtSUsername" name="username" required class="form-control" 
                 placeholder="Username">
             </div>
         </div>
         <div class="row form-group">
             <label for="emailSUser" class="col-sm-3 col-form-label">Email Address:</label>
             <div class="col-sm-9">
-            <input type="email" id="emailSUser" name="emailSUser" required class="form-control"
+            <input type="email" id="emailSUser" name="email" required class="form-control"
                  placeholder="email@example.com">
             </div>
         </div>
         <div class="row form-group">
         <label for="txtSPassword" class="col-sm-3 col-form-label">Password</label>
         <div class="col-sm-9">
-            <input type="password" id="txtSPassword" name="txtSPassword" placeholder="Password" required
+            <input type="password" id="txtSPassword" name="password" placeholder="Password" required
                 class="form-control">
         </div>
         <div id="divPasswordError" class="invisible col-sm-5 errorMessage"></div>
@@ -43,7 +43,7 @@
         <div class="row form-group">
             <label for="txtSPasswordMatch" class="col-sm-3 col-form-label">Confirm Password:</label>
             <div class="col-sm-9">
-                <input type="password" id="txtSPasswordMatch" name="txtSPasswordMatch" placeholder="Password"
+                <input type="password" id="txtSPasswordMatch" name="passwordMatch" placeholder="Password"
                     class="form-control" required>
             </div>
             <div id="divPassword2Error" class="invisible col-sm-5 errorMessage"></div>
@@ -82,19 +82,19 @@
         <div class="row form-group">
             <label for="txtLoc" class="col-sm-3 col-form-label">Location:</label>
             <div class="col-sm-9">
-                <input type="text" id="txtLoc" name="txtLoc" class="form-control">
+                <input type="text" id="txtLoc" name="location" class="form-control">
             </div>
         </div>
         <div class="row form-group">
             <label for="txtDoB" class="col-sm-3 col-form-label">Date of birth:</label>
             <div class="col-sm-9">
-                <input type="date" id="txtDoB" name="txtDoB" class="form-control" />
+                <input type="date" id="txtDoB" name="dob" class="form-control" />
             </div>
         </div>
         <div class="row form-group">
             <label for="dlSecQ" class="col-sm-3 col-form-label">Security Question</label>
             <div class="col-sm-9">
-                <select id="dlSecQ" name="dlSecQ" required class="form-control">
+                <select id="dlSecQ" name="secQ" required class="form-control" onchange="return showSec()">
                     <option value="">Choose</option>
                     <option value="mMaidenName">What is your mother's maiden name?</option>
                     <option value="firstPet">What was the name of your first pet?</option>
@@ -107,10 +107,12 @@
             </div>
         </div>
         <label for="txtBio">Bio:</label><br>
-        <textarea id="txtBio" name=txtBio></textarea><br>
+        <textarea id="txtBio" name=bio></textarea><br>
         <div>
             <button type="submit" class="btn btn-primary">Submit</button>
             <button type="reset" class="btn btn-secondary">Reset</button>
         </div>
     </form>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="js/script.js"></script>
