@@ -50,6 +50,7 @@ userSchema = mongoose.Schema({
     }
 
 })
+const User = mongoose.model("User", userSchema);
 
 userSchema.virtual("fullName").get(function () {
     return `${this.name.first} ${this.name.first}`;
@@ -57,12 +58,13 @@ userSchema.virtual("fullName").get(function () {
 
 userSchema.pre("save", function(next) {
     let user = this;
-    User.exists({
+    User.findOne({
         username: user.username
     })
     .then(exist => {
         if(exist)
-            throw ReferenceError;
+            //throw ReferenceError;
+            console.log(exist);
         else{
             next();
         }

@@ -5,7 +5,7 @@ homeController = require("./controllers/homeController"),
 usersController = require("./controllers/usersController"),
 errorController = require("./controllers/errorController");
 
-mongoose.connect("mongodb://localhost:27017/confetti_cuisine", {useNewUrlParser: true});
+mongoose.connect("mongodb://localhost:27017/chattr", {useNewUrlParser: true});
 app.set("port", process.env.PORT || 3000);
 app.set("view engine", "ejs");
 app.use(

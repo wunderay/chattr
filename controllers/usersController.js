@@ -12,8 +12,8 @@ module.exports = {
     create: (req, res, next) => {
         let newuser = new User({
             name: {
-                first: req.body.first,
-                last: req.body.last
+                first: req.body.firstName,
+                last: req.body.lastName
             },
             username: req.body.username,
             password: req.body.password,
@@ -23,15 +23,17 @@ module.exports = {
             dob: req.body.dob,
             security: {
                 question: req.body.secQ,
-                last: req.body.txtSecQ
+                answer: req.body.txtSecQ
             },
             bio: req.body.bio,
 
         });
+        console.log(newuser.name.first);
         User.create(newuser)
         .then( user => {
             res.locals.user = user;
             res.locals.redirect = "home";
+            console.log("Reached 1");
             next();
         })
         .catch(error => {
