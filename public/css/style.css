@@ -1,14 +1,15 @@
 *{
     box-sizing: border-box;
 }
-section, header {
+.center {
     margin-left: auto;
     margin-right: auto;
     width: 600px;
     position: relative;
 }
-header{
+#nav{
     text-align: center;
+    padding-bottom: 30px;
 }
 .postImg{
     max-width: 554px;
