@@ -1,0 +1,147 @@
+*{
+    box-sizing: border-box;
+}
+section, header {
+    margin-left: auto;
+    margin-right: auto;
+    width: 600px;
+    position: relative;
+}
+header{
+    text-align: center;
+}
+.postImg{
+    max-width: 554px;
+    height: auto;
+}
+#logo{
+  position: relative;
+  max-width: 50px;
+  height: auto;
+  float: left;
+}
+#blank{
+  max-width: 50px;
+  height: auto;
+  float: right;
+  /*background-color: black;*/
+}
+#title{
+font-size: 50px
+}
+body{
+    background-color: rgb(153, 214, 255);
+}
+aside{
+    margin-left: -25%;
+}
+article{
+    margin-top: auto;
+    margin-bottom: auto;
+    padding: 10px;
+    border-radius: 5px;
+    border-color: darkblue;
+    border-style: solid;
+    background-color: #66C2FF;
+    z-index: 1;
+}
+.content{
+    background-color: #66C2FF;
+    padding: 10px;
+}
+.btn-primary{
+    background-color:rgb(41, 133, 219);
+}
+.intBar{
+    padding: 10px;
+    display: flex;
+    align-items: stretch;
+    justify-content:space-evenly;
+}
+#wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+.username{
+    font: bold;
+    color: snow;
+}
+footer{
+    position:relative;
+    bottom:0;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width:350px;
+    height:auto; 
+    float: bottom;
+    clear:both;
+    text-align: center;
+    background-color: azure;
+}
+/*Copied below from w3 schools https://www.w3schools.com/howto/howto_css_fixed_sidebar.asp*/
+.sidenav {
+    display:block;
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: 160px; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    float:left;
+    left: 0%;
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+    background-color: #66C2FF;
+  }
+  
+  /* The navigation menu links */
+  .sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    text-align: left;
+    font-size: 25px;
+    color: #000000;
+    display: block;
+  }
+  
+  /* When you mouse over the navigation links, change their color */
+  .sidenav a:hover {
+    color: #f1f1f1;
+  }
+/*https://www.w3schools.com/howto/howto_css_sidebar_responsive.asp*/
+/* On screens that are less than 700px wide, make the sidebar into a topbar */
+@media screen and (max-width: 700px) {
+    .sidenav {
+      width: 100%;
+      height: auto;
+      position: relative;
+    }
+    .sidebar a {float: left;}
+    .content {margin-left: 0;
+            margin-top: 20px;
+                margin-top: auto;}
+  }
+  
+  /* On screens that are less than 400px, display the bar vertically, instead of horizontally */
+  @media screen and (max-width: 400px) {
+    .sidenav a {
+      text-align: center;
+      float: none;
+    }
+  }
+  .btn{
+      margin: 10px;
+  }
+
+  .errorMessage{
+    color: rgb(139, 1, 1);
+  }
+
+  .hasError{
+    background-color:red;
+  }
+
+  .invisible{
+    display: none;
+  }
