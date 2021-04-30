@@ -36,10 +36,10 @@
       <p>Logged in as <a href="<%= `/users/${currentUser._id}`%>">
           <%= currentUser.fullName %>
       </a>
-      <a href="/users/logout">Log out</a>
+      <a href="/logout">Log out</a>
       </p>
       <% } else { %>
-          <a href="/users/login">Log in</a>    
+          <a href="/login">Log in</a>    
       <% } %>
 
   </div>
