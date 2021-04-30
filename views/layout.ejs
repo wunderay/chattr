@@ -30,6 +30,34 @@
         </a>
       </div>
     </div>
+
+    <div class="login">
+      <% if (loggedIn) { %>
+      <p>Logged in as <a href="<%= `/users/${currentUser._id}`%>">
+          <%= currentUser.fullName %>
+      </a>
+      <a href="/users/logout">Log out</a>
+      </p>
+      <% } else { %>
+          <a href="/users/login">Log in</a>    
+      <% } %>
+
+  </div>
+
+  <div class="flash">
+      <% if(flashMessages) { %>
+          <% if(flashMessages.sucess) { %>
+              <div class="flash sucess">
+                  <%= flashMessages.success %>
+              </div>
+          <% } else if(flashMessages.error) { %>
+              <div class="flash sucess">
+                  <%= flashMessages.error %>
+              </div>
+          <% } %>
+      <% } %>
+  </div>
+
     <div class="content center">
         <%- body%>
     </div>

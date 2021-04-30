@@ -6,14 +6,6 @@ const mongoose = require("mongoose"),
 User = require("./user"),
 postSchema = mongoose.Schema({
     author: { type: Schema.Types.ObjectId, ref: User},
-    id : {
-        type: Number,
-        required: true
-    },
-    date : {
-        type: Date,
-        required: true
-    },
     text: {
         type: String
     },
@@ -25,7 +17,8 @@ postSchema = mongoose.Schema({
     },
     shares: {
         type: Number
-    },
-    
-
-})
+    }}, 
+    {
+        timestamps: true
+      },
+)

@@ -1,6 +1,25 @@
 "use strict";
-
-const User = require("../models/user");
+const passport = require("passport");
+const User = require("../models/user"), 
+    getUserParams = body => {
+        return {
+            name: {
+                first: body.firstName,
+                last: body.lastName
+            },
+            username: body.username,
+            password: body.password,
+            email: body.email,
+            gender: body.gender,
+            location: body.location,
+            dob: body.dob,
+            security: {
+                question: body.secQ,
+                answer: body.txtSecQ
+            },
+            bio: body.bio,
+        };
+    };
 
 module.exports = {
     loginView: (req, res) => {
@@ -10,36 +29,60 @@ module.exports = {
         res.render("signup");
     },
     create: (req, res, next) => {
-        let newuser = new User({
-            name: {
-                first: req.body.firstName,
-                last: req.body.lastName
-            },
-            username: req.body.username,
-            password: req.body.password,
-            email: req.body.email,
-            gender: req.body.gender,
-            location: req.body.location,
-            dob: req.body.dob,
-            security: {
-                question: req.body.secQ,
-                answer: req.body.txtSecQ
-            },
-            bio: req.body.bio,
 
-        });
+        let userParams = getUserParams(req.body);
+
+        let newuser = new User({userParams});
+
         console.log(newuser.name.first);
-        User.create(newuser)
-        .then( user => {
-            res.locals.user = user;
-            res.locals.redirect = "home";
-            console.log("Reached 1");
-            next();
-        })
-        .catch(error => {
-            console.log(`Error saving: ${error.message}`);
-            next(error);
-        })
+        User.register(newUser, req.body.password, (error, user) => {
+            if (user) {
+                req.flash("success", "User account has been successfully created!");
+                res.locals.redirect= "/users";
+                next();
+            }
+            else{
+                req.flash("error", `failed to creat user account: ${error.message}`);
+                res.locals.redirect = "/users/new"; 
+                next();
+            }
+        });
+    },
+    validate: (req, res, next) => {
+        req.sanitizeBody("email").normalizeEmail({
+            all_lowercase: true
+            }).trim();
+          req.check("email", "Email is invalid").isEmail();
+          req.check("zipCode", "Zip code is invalid")
+        .notEmpty().isInt().isLength({
+            min: 5,
+            max: 5
+          }).equals(req.body.zipCode);
+          req.check("password", "Password cannot be empty").notEmpty();
+        
+          req.getValidationResult().then((error) => {
+            if (!error.isEmpty()) {
+              let messages = error.array().map(e => e.msg);
+              req.skip = true;
+              req.flash("error", messages.join(" and "));
+              res.locals.redirect = "/users/new";
+              next();
+            } else {
+              next();
+            }
+          });
+    },
+    authenticate: passport.authenticate("local", {
+        failureRedirect: "/users/login",
+        failureFlash: "Failed to login.",
+        successRedirect: "/",
+        successFlash: "Logged in!"
+      }),
+    logout: (req, res, next) => {
+        req.logout();
+        req.flash("success", "You have been logged out!");
+        res.locals.redirect = "/";
+        next();
     },
     redirectView: (req, res, next) => {
         let redirectPath = res.locals.redirect;
