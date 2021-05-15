@@ -43,7 +43,7 @@ module.exports = {
     redirectView: (req, res, next) => {
         let redirectPath = res.locals.redirect;
         if (redirectPath) res.redirect(redirectPath);
-        else next();
+        else res.redirect("/");
       },
     show: (req, res, next) => {
         let postId = req.params.id;
