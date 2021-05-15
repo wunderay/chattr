@@ -1,24 +1,19 @@
 "use strict";
-const passportLocalMongoose = require("passport-local-mongoose");
 
 const mongoose = require("mongoose"),
-{ Schema } = require("mongoose"),
-User = require("./user"),
-postSchema = mongoose.Schema({
-    author: { type: Schema.Types.ObjectId, ref: User},
+
+//User = require("./user"),
+postSchema = new mongoose.Schema({
+    author: {type: String}, //{ type: Schema.Types.ObjectId, ref: User},
     text: {
         type: String
     },
-    image: {
-        type: Image
-    },
-    likes: {
-        type: Number
-    },
-    shares: {
-        type: Number
-    }}, 
+    hashtag: {type: String}
+},
     {
         timestamps: true
       },
-)
+);
+//mongoose.Schema.index({'$**': 'text'}); //index all strings
+
+module.exports = mongoose.model("Post", postSchema);

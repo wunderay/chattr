@@ -1,6 +1,12 @@
-<div class="form-data">
-    <form action="/posts/create" method="POST">
-        <label for="text">Message</label>
-        <input type="text" name="text" id="txtText" required>
-        <button type="submit">Post</button>
-</div>
+<div class="data-form">
+    <form class="form-signin" action="/posts/create" method="POST">
+      <h2 class="form-signin-heading">Create a new post:</h2>
+      <label for="Author">Author</label>
+      <input type="text" name="author" id="Author" class="form-control" placeholder="Author" autofocus>
+      <label for="content">Content</label>
+      <input type="text" name="content" id="content" class="form-control" placeholder="Tweet">
+      <label for="hashtag">HashTags</label>
+      <input type="text" name="hashtag" id="hashtag" class="form-control" placeholder="#Hashtag">
+      <br/><button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
+    </form>
+  </div>

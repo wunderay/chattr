@@ -1,14 +1,21 @@
-const httpStatus = require("http-status-codes")
+"use strict";
 
-exports.pageNotFoundError = (req, res, error) => {
-    let errorCode = httpStatus.NOT_FOUND;
-    res.status(errorCode);
-    res.render(error);
-}
+const httpStatus = require("http-status-codes");
 
-exports.internalServerError = (error, req, res, next) => {
-    let errorCode = httpStatus.INTERNAL_SERVER_ERROR;
-    res.status(errorCode);
-    res.send(`Error ${errorCode}, Sorry! Something went wrong with your application.`);
-    console.log(error.stack)
-}
+exports.logErrors = (error, req, res, next) => {
+  console.error(error.stack);
+  next(error);
+};
+
+exports.respondNoResourceFound = (req, res) => {
+  let errorCode = httpStatus.NOT_FOUND;
+  res.status(errorCode);
+  res.send(`${errorCode} | The page does not exist!`);
+};
+
+exports.respondInternalError = (error, req, res, next) => {
+  let errorCode = httpStatus.INTERNAL_SERVER_ERROR;
+  console.log(`ERROR occurred: ${error.stack}`);
+  res.status(errorCode);
+  res.send(`${errorCode} | Sorry, our application is experiencing a problem!`);
+};

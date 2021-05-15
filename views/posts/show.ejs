@@ -1,0 +1,13 @@
+<article>
+    <div class="username">
+       <%= post.author %>
+           </div>
+           <div class="txtPost">
+               <%= post.text %>
+           </div>
+           <div>
+               <% post.hashtag.forEach(tag => { %>
+                   <span class="button"><%= tag %></span>
+           </div>
+           <% }); %>
+</article>

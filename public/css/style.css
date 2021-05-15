@@ -30,9 +30,6 @@
 #title{
 font-size: 50px
 }
-body{
-    background-color: rgb(153, 214, 255);
-}
 aside{
     margin-left: -25%;
 }
@@ -52,14 +49,6 @@ article{
 }
 .btn-primary{
     background-color:rgb(41, 133, 219);
-}
-.button {
-  background-color: rgb(41, 133, 219);
-  padding: 0.3vw 3vw;
-  border-radius: 2px;
-  cursor: pointer;
-  display: inline-block;
-  color: #fff;
 }
 .intBar{
     padding: 10px;
@@ -101,7 +90,6 @@ footer{
     left: 0%;
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 20px;
-    background-color: #66C2FF;
   }
   
   /* The navigation menu links */
@@ -140,7 +128,7 @@ footer{
     }
   }
   .btn{
-      margin: 10px;
+      margin-right: 10px;
   }
 
   .errorMessage{
@@ -181,10 +169,6 @@ footer{
       white-space: nowrap;
       font-size: 2vw;
     }
-  }
-
-  button[type=submit] {
-    margin-top: 20px;
   }
 
   .flash {

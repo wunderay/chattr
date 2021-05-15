@@ -1,70 +1,93 @@
-const express= require("express"), app = express(),
-mongoose = require("mongoose"), router = express.Router(),
-methodOverride = require("method-override"), layouts = require("express-ejs-layouts"),
-homeController = require("./controllers/homeController"), 
-usersController = require("./controllers/usersController"),
-errorController = require("./controllers/errorController"),
-cookieParser = require("cookie-parser"),
-expressSession = require("express-session"),
-expressValidator = require("express-validator"),
-passport = require("passport"),
-connectFlash = require("connect-flash")
-const User = require("./models/user");
+"use strict";
 
-mongoose.connect("mongodb://localhost:27017/chattr", {useNewUrlParser: true});
-app.set("port", process.env.PORT || 3000);
+const express = require("express"),
+  app = express(),
+  router = require("./routes/index"),
+  layouts = require("express-ejs-layouts"),
+  mongoose = require("mongoose"),
+  methodOverride = require("method-override"),
+  expressSession = require("express-session"),
+  cookieParser = require("cookie-parser"),
+  connectFlash = require("connect-flash"),
+  expressValidator = require("express-validator"),
+  passport = require("passport"),
+  morgan = require("morgan"),
+  User = require("./models/user");
+
+mongoose.Promise = global.Promise;
+
+if (process.env.NODE_ENV === "test")
+  mongoose.connect(
+    "mongodb://localhost:27017/chattr",
+    { useNewUrlParser: true, useFindAndModify: false }
+  );
+else
+  mongoose.connect(
+    process.env.MONGODB_URI || "mongodb://localhost:27017/chattr",
+    { useNewUrlParser: true, useFindAndModify: false }
+  );
+
+mongoose.set("useCreateIndex", true);
+
+const db = mongoose.connection;
+
+db.once("open", () => {
+  console.log("Successfully connected to MongoDB using Mongoose!");
+});
+
+if (process.env.NODE_ENV === "test") app.set("port", 3001);
+else app.set("port", process.env.PORT || 3000);
+
 app.set("view engine", "ejs");
+app.set("token", process.env.TOKEN || "chattrT0k3n");
+app.use(morgan("combined"));
+app.use(express.static("public"));
+app.use(layouts);
 app.use(
-    express.urlencoded({extended: false})
+  express.urlencoded({
+    extended: false
+  })
 );
-router.use(express.json());
-router.use(layouts);
-router.use(express.static("public"));
 
-router.use(methodOverride("_method", {methods: ["POST", "GET"]}));
+app.use(
+  methodOverride("_method", {
+    methods: ["POST", "GET"]
+  })
+);
 
-//Cookie
-router.use(cookieParser("my_passcode"));
-router.use(expressSession({
-    secret: "my_passcode",
+app.use(express.json());
+app.use(cookieParser("secret_passcode"));
+app.use(
+  expressSession({
+    secret: "secret_passcode",
     cookie: {
-        maxAge: 360000
-      },
+      maxAge: 4000000
+    },
     resave: false,
     saveUninitialized: false
- }));
-router.use(connectFlash());
-router.use(passport.initialize());
-router.use(passport.session());
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
 passport.use(User.createStrategy());
-passport.use('local',User.serializeUser);
-passport.serializeUser(User.serializeUser);
-passport.deserializeUser(User.deserializeUser);
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+app.use(connectFlash());
 
-
-router.use((req, res, next) => {
-    res.locals.flashMessages = req.flash();
-    res.locals.loggedIn = req.isAuthenticated();
-    res.locals.currentUser = req.User;
-    next();
-    })
-
-
-router.get("/", homeController.index);
-
-//routes
-router.get("/login", usersController.loginView);
-router.get("/signup", usersController.new);
-router.get("/home", usersController.new);
-router.post("/signup", usersController.create, usersController.redirectView);
-
-//Errors
-router.use(errorController.pageNotFoundError );
-router.use(errorController.internalServerError );
+app.use((req, res, next) => {
+  res.locals.loggedIn = req.isAuthenticated();
+  res.locals.currentUser = req.user;
+  res.locals.flashMessages = req.flash();
+  next();
+});
+app.use(expressValidator());
 
 app.use("/", router);
 
-app.listen(app.get("port"), () => {
-    console.log(`Server is running on port: $ ${app.get("port")}`)
-    router.post("/users/create", usersController.create, usersController.redirectView);
-});
+const server = app.listen(app.get("port"), () => {
+    console.log(`Server running at http://localhost:${app.get("port")}`);
+  }),
+  io = require("socket.io")(server);
+
+module.exports = app;
