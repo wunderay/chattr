@@ -1,7 +1,7 @@
-# Web Application Development Final Project
+# Chattr Social Media Website
 
-Designed and Created by Raymond Wu alone. 
+A social media website built on Bootstrap, Express.js, Node.js, and MongoDB.
+
+Designed and Created by Raymond Wu. 
 
 Video link: https://youtu.be/iiBxr0rFZRg
-
-Joseph Heikoff abandonned this project.
